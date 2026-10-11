@@ -22,7 +22,6 @@
     <style>
       :root {
         --bg: #fdf4f4;
-        --bg2: #f9e4e8;
         --ink: #5a3a43;
         --soft: #9b7a83;
         --rose: #d98a9f;
@@ -54,7 +53,18 @@
         line-height: 2;
         overflow-x: hidden;
       }
-      /* falling petals */
+      body.locked {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+
+      /* ---------- پتال‌ها ---------- */
       .petals {
         position: fixed;
         inset: 0;
@@ -80,6 +90,7 @@
           transform: translate3d(var(--dx), 110vh, 0) rotate(540deg);
         }
       }
+
       main {
         position: relative;
         z-index: 1;
@@ -93,6 +104,10 @@
         padding: 6rem 1.5rem;
         text-align: center;
       }
+      section.short {
+        min-height: auto;
+        padding: 5rem 1.5rem;
+      }
       .reveal {
         opacity: 0;
         transform: translateY(24px);
@@ -105,7 +120,111 @@
         transform: none;
       }
 
-      /* hero */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        color: var(--rose);
+        margin: 0 0 2rem;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        width: 56px;
+        height: 1px;
+        background: var(--line);
+      }
+      .label {
+        font-size: 0.95rem;
+        color: var(--soft);
+        letter-spacing: 0.06em;
+        margin-bottom: 0.6rem;
+      }
+      .title {
+        font-family: "Aref Ruqaa", "Vazirmatn", serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 7vw, 3rem);
+        color: var(--rose-deep);
+        line-height: 1.6;
+        margin-bottom: 0.4rem;
+      }
+      .sub {
+        font-size: clamp(1.05rem, 3.4vw, 1.35rem);
+        color: var(--soft);
+        max-width: 30rem;
+      }
+
+      /* ---------- ورودی هدیه ---------- */
+      .intro {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.4rem;
+        background:
+          radial-gradient(50rem 40rem at 80% 0%, #fbdce3 0%, transparent 60%),
+          radial-gradient(40rem 40rem at 0% 100%, #f6d3dc 0%, transparent 55%),
+          var(--bg);
+        transition:
+          opacity 1.1s ease,
+          visibility 1.1s ease,
+          transform 1.1s ease;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .intro.gone {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(1.06);
+      }
+      .gift {
+        width: 150px;
+        height: 150px;
+        animation: float 3.4s ease-in-out infinite;
+        transition: transform 0.5s ease;
+      }
+      .gift:hover {
+        transform: scale(1.06) rotate(-3deg);
+      }
+      @keyframes float {
+        0%,
+        100% {
+          translate: 0 0;
+        }
+        50% {
+          translate: 0 -12px;
+        }
+      }
+      .intro h2 {
+        font-family: "Aref Ruqaa", serif;
+        font-size: clamp(2.2rem, 8vw, 3.2rem);
+        color: var(--rose-deep);
+        font-weight: 700;
+      }
+      .intro p {
+        color: var(--soft);
+        font-size: 1.05rem;
+      }
+      .btn {
+        padding: 0.75rem 2rem;
+        border-radius: 999px;
+        background: linear-gradient(120deg, #d98a9f, #c9627d);
+        color: #fff;
+        font-weight: 400;
+        box-shadow: 0 14px 34px -14px rgba(184, 86, 111, 0.7);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 38px -14px rgba(184, 86, 111, 0.8);
+      }
+
+      /* ---------- هیرو ---------- */
       .eyebrow {
         font-size: 0.95rem;
         letter-spacing: 0.08em;
@@ -126,11 +245,6 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-      }
-      .sub {
-        font-size: clamp(1.05rem, 3.4vw, 1.35rem);
-        color: var(--soft);
-        max-width: 30rem;
       }
       .scroll {
         margin-top: 3.5rem;
@@ -160,29 +274,24 @@
         }
       }
 
-      .divider {
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-        color: var(--rose);
-        margin: 0 0 2.2rem;
+      /* ---------- دختر یعنی ---------- */
+      .is {
+        display: grid;
+        gap: 1.6rem;
+        max-width: 34rem;
       }
-      .divider::before,
-      .divider::after {
-        content: "";
-        width: 56px;
-        height: 1px;
-        background: var(--line);
+      .is p {
+        font-family: "Aref Ruqaa", "Vazirmatn", serif;
+        font-size: clamp(1.7rem, 6.2vw, 2.5rem);
+        line-height: 1.7;
+        color: var(--ink);
       }
-
-      .label {
-        font-size: 0.9rem;
-        color: var(--soft);
-        letter-spacing: 0.06em;
-        margin-bottom: 0.4rem;
+      .is b {
+        font-weight: 700;
+        color: var(--rose-deep);
       }
 
-      /* poem cards */
+      /* ---------- کارت‌ها و شعر ---------- */
       .card {
         background: var(--card);
         border: 1px solid var(--line);
@@ -211,9 +320,7 @@
         font-weight: 600;
         color: var(--rose-deep);
       }
-
       .free {
-        font-family: "Vazirmatn", sans-serif;
         font-weight: 200;
         font-size: clamp(1.2rem, 4.2vw, 1.55rem);
         line-height: 2.4;
@@ -230,7 +337,197 @@
         color: var(--rose-deep);
       }
 
-      /* message */
+      /* ---------- گالری ---------- */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.4rem 1rem;
+        max-width: 62rem;
+        width: 100%;
+        margin-top: 1.6rem;
+      }
+      @media (min-width: 760px) {
+        .gallery {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem 1.6rem;
+        }
+      }
+      .polaroid {
+        background: #fff;
+        padding: 0.7rem 0.7rem 0;
+        border-radius: 6px;
+        box-shadow: 0 18px 40px -22px rgba(120, 50, 75, 0.55);
+        transition:
+          transform 0.5s ease,
+          box-shadow 0.5s ease;
+        transform: rotate(var(--r));
+      }
+      .polaroid:hover {
+        transform: rotate(0) translateY(-6px) scale(1.03);
+        box-shadow: 0 26px 50px -22px rgba(120, 50, 75, 0.6);
+      }
+      .polaroid .ph {
+        aspect-ratio: 1/1;
+        width: 100%;
+        border-radius: 3px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #fbe3e8, #f4cfd9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 2.4rem;
+      }
+      .polaroid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .polaroid figcaption {
+        font-family: "Aref Ruqaa", serif;
+        font-size: 1.05rem;
+        color: var(--rose-deep);
+        padding: 0.7rem 0.2rem 0.9rem;
+        line-height: 1.6;
+      }
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: rgba(60, 25, 38, 0.78);
+        backdrop-filter: blur(6px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+      }
+      .lightbox.open {
+        display: flex;
+      }
+      .lightbox img {
+        max-width: min(92vw, 720px);
+        max-height: 76vh;
+        border-radius: 10px;
+        border: 10px solid #fff;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+      .lightbox p {
+        color: #fff;
+        font-family: "Aref Ruqaa", serif;
+        font-size: 1.3rem;
+      }
+
+      /* ---------- دلیل‌ها (کارت برگردان) ---------- */
+      .flips {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 42rem;
+        width: 100%;
+        margin-top: 1.4rem;
+      }
+      @media (min-width: 760px) {
+        .flips {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .flip {
+        perspective: 900px;
+        height: 190px;
+      }
+      .flip-in {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.2, 1);
+        transform-style: preserve-3d;
+      }
+      .flip.on .flip-in {
+        transform: rotateY(180deg);
+      }
+      .face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+      }
+      .front {
+        background: var(--card);
+        backdrop-filter: blur(8px);
+      }
+      .front .n {
+        font-family: "Aref Ruqaa";
+        font-size: 2.4rem;
+        color: var(--rose);
+      }
+      .front .t {
+        font-weight: 400;
+        color: var(--rose-deep);
+        font-size: 1.05rem;
+      }
+      .back {
+        transform: rotateY(180deg);
+        background: linear-gradient(135deg, #fbe0e7, #f6c9d5);
+        font-size: 0.95rem;
+        line-height: 1.9;
+        color: #6b3f4c;
+      }
+      .hint {
+        font-size: 0.85rem;
+        color: var(--soft);
+        margin-top: 1rem;
+      }
+
+      /* ---------- کوپن‌ها ---------- */
+      .coupons {
+        display: grid;
+        gap: 1rem;
+        max-width: 34rem;
+        width: 100%;
+        margin-top: 1.4rem;
+      }
+      .coupon {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: right;
+        padding: 1.1rem 1.3rem;
+        background: var(--card);
+        border: 1.5px dashed var(--rose);
+        border-radius: 20px;
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+      .coupon:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.9);
+      }
+      .coupon .em {
+        font-size: 1.8rem;
+      }
+      .coupon b {
+        display: block;
+        font-weight: 600;
+        color: var(--rose-deep);
+      }
+      .coupon small {
+        color: var(--soft);
+        font-size: 0.9rem;
+      }
+
+      /* ---------- نامه ---------- */
       .letter {
         max-width: 34rem;
         text-align: justify;
@@ -255,7 +552,7 @@
         display: inline-block;
         color: var(--rose);
         font-size: 1.6rem;
-        margin-top: 2rem;
+        margin-top: 1.4rem;
         animation: beat 2.2s ease-in-out infinite;
       }
       @keyframes beat {
@@ -274,6 +571,43 @@
         }
       }
 
+      /* ---------- پایان ---------- */
+      .final-msg {
+        font-family: "Aref Ruqaa", serif;
+        font-size: clamp(1.8rem, 6.5vw, 2.8rem);
+        color: var(--rose-deep);
+        line-height: 1.9;
+        margin-top: 1.6rem;
+        opacity: 0;
+        transform: translateY(14px);
+        transition: all 1.2s ease;
+        min-height: 6rem;
+      }
+      .final-msg.show {
+        opacity: 1;
+        transform: none;
+      }
+      .burst {
+        position: fixed;
+        bottom: -30px;
+        z-index: 70;
+        pointer-events: none;
+        color: var(--rose);
+        animation: rise 3.6s ease-out forwards;
+      }
+      @keyframes rise {
+        0% {
+          transform: translate(0, 0) scale(0.6);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--bx), -105vh) scale(1.3) rotate(var(--br));
+          opacity: 0;
+        }
+      }
       footer {
         position: relative;
         z-index: 1;
@@ -286,7 +620,8 @@
       @media (prefers-reduced-motion: reduce) {
         .petal,
         .scroll i,
-        .heart {
+        .heart,
+        .gift {
           animation: none;
         }
         .reveal {
@@ -300,22 +635,67 @@
       }
     </style>
   </head>
-  <body>
+  <body class="locked">
     <div class="petals" id="petals" aria-hidden="true"></div>
+
+    <!-- ورودی -->
+    <div class="intro" id="intro">
+      <button class="gift" id="giftBtn" aria-label="باز کردن هدیه">
+        <svg viewBox="0 0 120 120" width="150" height="150" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f7c3d0" />
+              <stop offset="1" stop-color="#e08aa1" />
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fbd7e0" />
+              <stop offset="1" stop-color="#eba3b7" />
+            </linearGradient>
+          </defs>
+          <rect x="18" y="52" width="84" height="54" rx="8" fill="url(#g1)" />
+          <rect x="12" y="38" width="96" height="22" rx="8" fill="url(#g2)" />
+          <rect
+            x="55"
+            y="38"
+            width="10"
+            height="68"
+            fill="#fff"
+            opacity=".85"
+          />
+          <path d="M60 38 C40 12, 14 22, 32 38 Z" fill="#fff" opacity=".92" />
+          <path d="M60 38 C80 12, 106 22, 88 38 Z" fill="#fff" opacity=".92" />
+          <circle cx="60" cy="38" r="6" fill="#d9788f" />
+        </svg>
+      </button>
+      <h2>برای تو</h2>
+      <p>فرفری من، این هدیه را فقط تو می‌توانی باز کنی</p>
+      <button class="btn" id="openBtn">بازش کن</button>
+    </div>
 
     <main>
       <!-- ۱. آغاز -->
       <section>
-        <div class="eyebrow reveal">روز جهانی دختر مبارک</div>
+        <div class="eyebrow reveal">روز دختر مبارک</div>
         <h1 class="reveal">حدیث</h1>
         <p class="sub reveal">
-          این صفحه کوچک فقط برای توست، فرفری من.<br />برای تو که سه سال است
-          دنیایم را رنگی کرده‌ای.
+          امروز روز توست، فرفری من.<br />روز همه دخترهای قشنگ دنیا، و روز خودت.
         </p>
         <div class="scroll reveal"><span>ادامه</span><i></i></div>
       </section>
 
-      <!-- ۲. شعر کلاسیک -->
+      <!-- ۲. دختر یعنی -->
+      <section>
+        <div class="divider reveal">✿</div>
+        <div class="is">
+          <p class="reveal">دختر یعنی <b>رویاهای بزرگ</b></p>
+          <p class="reveal">دختر یعنی نرم باشی و <b>محکم</b> بمانی</p>
+          <p class="reveal">دختر یعنی <b>گل</b> باشی و <b>کوه</b></p>
+          <p class="reveal">دختر یعنی خودت باشی، بی‌هیچ عذرخواهی</p>
+          <p class="reveal">دختر یعنی <b>تو</b></p>
+        </div>
+      </section>
+
+      <!-- ۳. شعر کلاسیک -->
       <section>
         <div class="divider reveal">✿</div>
         <div class="label reveal">از گنجینه شعر ما</div>
@@ -331,7 +711,7 @@
         </p>
       </section>
 
-      <!-- ۳. شعر من -->
+      <!-- ۴. شعر من -->
       <section>
         <div class="divider reveal">✿</div>
         <div class="label reveal">و این هم شعر خودم برای تو</div>
@@ -339,10 +719,6 @@
           <div class="free">
             <p>
               <em>حدیث،</em><br />نامت را که صدا می‌زنم<br />دنیا آرام می‌شود.
-            </p>
-            <p>
-              سه سال است<br />خانه‌ام توی نگاه توست<br />و هیچ راه دیگر<br />قشنگ‌تر
-              از راه رسیدن به تو نبوده.
             </p>
             <p>
               <em>فرفری من،</em><br />موهایت که پیچ می‌خورد<br />دل من هم با
@@ -357,55 +733,187 @@
         </div>
       </section>
 
-      <!-- ۴. پیام -->
+      <!-- ۶. دلیل‌ها -->
+      <section>
+        <div class="divider reveal">✿</div>
+        <h2 class="title reveal">حدیث یعنی…</h2>
+        <p class="sub reveal">روی هر کارت بزن.</p>
+        <div class="flips" id="flips"></div>
+      </section>
+
+      <!-- ۸. کوپن‌ها -->
+      <section>
+        <div class="divider reveal">✿</div>
+        <h2 class="title reveal">قرار بعدی ما</h2>
+        <p class="sub reveal">دفعه بعد که دیدمت، همه‌چیز به انتخاب توست.</p>
+        <div class="coupons">
+          <div class="coupon reveal">
+            <span class="em">🍽️</span>
+            <div>
+              <b>شام به انتخاب تو</b
+              ><small>هر جای تهران که دلت خواست، حساب با من</small>
+            </div>
+          </div>
+          <div class="coupon reveal">
+            <span class="em">🤍</span>
+            <div>
+              <b>بغل بلند</b
+              ><small>اولین بغل بعد از این همه دوری، بدون محدودیت زمانی</small>
+            </div>
+          </div>
+          <div class="coupon reveal">
+            <span class="em">🎬</span>
+            <div>
+              <b>فیلم‌دیدن به انتخاب تو</b><small>بدون غر زدن من</small>
+            </div>
+          </div>
+          <div class="coupon reveal">
+            <span class="em">🌿</span>
+            <div>
+              <b>قدم‌زدن و ماجراجویی</b><small>هر جا که بگویی می‌برمت</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ۹. نامه -->
       <section>
         <div class="divider reveal">✿</div>
         <div class="letter reveal">
           <p>حدیث مهربانم،</p>
+          <p>امروز روز دخترهاست و من خواستم تو را جشن بگیرم، فرفری من.</p>
           <p>
-            امروز روز دخترهاست و من فکر کردم بهترین موقع است که بگویم تو برای من
-            خیلی بیشتر از این حرف‌هایی. تو <strong>آرامش</strong> منی، همان جا
-            که بعد از روز شلوغ بهش پناه می‌برم.
+            از تو یاد گرفتم که قدرت می‌تواند نرم باشد و مهربانی می‌تواند محکم.
+            تو <strong>آرامش</strong> منی، همان جا که بعد از روز شلوغ بهش پناه
+            می‌برم.
           </p>
           <p>
-            این سه سال از تو یاد گرفتم که قدرت می‌تواند نرم باشد و مهربانی
-            می‌تواند محکم. یاد گرفتم عشق یعنی ماندن، گوش دادن و کنار هم بزرگ
-            شدن.
+            می‌خواهم همیشه بدانی که رویاهایت را جدی می‌گیرم، موفقیت‌هایت را
+            بلندتر از خودت جشن می‌گیرم و هر وقت لازم شد، پشتت هستم. قول می‌دهم
+            تا جایی که توان دارم دنیایت را <strong>پر از رنگ</strong> نگه دارم.
           </p>
-          <p>
-            ممنونم که هستی، فرفری من. ممنونم که صبوری، که می‌خندی و که هنوز هم
-            من را انتخاب می‌کنی. قول می‌دهم تا جایی که توان دارم دنیایت را
-            <strong>پر از رنگ</strong> نگه دارم.
-          </p>
-          <p>روزت مبارک، فرفری قشنگ من.</p>
+          <p>ممنونم که هستی. روزت مبارک.</p>
           <div class="sign">با تمام دلم، ابوالفضل</div>
           <div class="heart">♡</div>
         </div>
       </section>
+
+      <!-- ۱۰. پایان -->
+      <section>
+        <div class="label reveal">هدیه آخر</div>
+        <button class="btn reveal" id="finalBtn">این را هم بزن</button>
+        <div class="final-msg" id="finalMsg"></div>
+      </section>
     </main>
 
-    <footer>ساخته شده با عشق، برای حدیث · ۱۹ مهر ۱۴۰۵</footer>
+    <footer>ساخته شده با عشق، برای حدیث</footer>
 
     <script>
-      // scroll reveal
+      /* =====================================================
+     تنظیمات: فقط همین بخش را ویرایش کن
+     ===================================================== */
+      // دلیل‌های دوست داشتن
+      const REASONS = [
+        {
+          t: "موهای فرفری‌ات",
+          d: "هر فر موهایت انگار دلم را دور انگشتش پیچانده.",
+        },
+        { t: "خنده‌ات", d: "صدایش بهترین آهنگ دنیاست و من هنوز سیر نشده‌ام." },
+        { t: "قدرتت", d: "نرم هستی و محکم، هر دو با هم. قدرت واقعی همین است." },
+        {
+          t: "رویاهایت",
+          d: "بزرگ‌اند و من دوست دارم تماشا کنم که یکی‌یکی به دست می‌آیند.",
+        },
+        { t: "مهربانی‌ات", d: "آدم‌ها کنار تو یاد می‌گیرند نرم‌تر باشند." },
+        {
+          t: "خودت بودنت",
+          d: "همین که هستی و همین‌طور که هستی، برای من کامل است.",
+        },
+      ];
+
+      // پیام آخر
+      const FINAL = "دوستت دارم، فرفری من.<br>امروز و همه روزهای بعد.";
+
+      /* ===================================================== */
+      const fa = (n) =>
+        Number(n).toLocaleString("fa-IR", { useGrouping: false });
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // باز کردن هدیه
+      function openGift() {
+        document.getElementById("intro").classList.add("gone");
+        document.body.classList.remove("locked");
+        window.scrollTo(0, 0);
+        heartBurst(18);
+      }
+      document.getElementById("giftBtn").addEventListener("click", openGift);
+      document.getElementById("openBtn").addEventListener("click", openGift);
+
+      // ظاهر شدن با اسکرول
       const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
+        (es) => {
+          es.forEach((e) => {
             if (e.isIntersecting) {
               e.target.classList.add("in");
               io.unobserve(e.target);
             }
           });
         },
-        { threshold: 0.2 },
+        { threshold: 0.15 },
       );
-      document.querySelectorAll(".reveal").forEach((el, i) => {
-        el.style.transitionDelay = (i % 3) * 120 + "ms";
+      const observe = (el) => {
+        el.style.transitionDelay = Math.random() * 160 + "ms";
         io.observe(el);
+      };
+      document.querySelectorAll(".reveal").forEach(observe);
+
+      // کارت‌های دلیل
+      const flips = document.getElementById("flips");
+      REASONS.forEach((r, idx) => {
+        const b = document.createElement("button");
+        b.className = "flip reveal";
+        b.setAttribute("aria-label", r.t);
+        b.innerHTML = `<div class="flip-in">
+      <div class="face front"><span class="n">${fa(idx + 1)}</span><span class="t">${r.t}</span></div>
+      <div class="face back">${r.d}</div></div>`;
+        b.addEventListener("click", () => b.classList.toggle("on"));
+        flips.appendChild(b);
+        observe(b);
       });
 
-      // petals
-      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // قلب‌های رها شده
+      function heartBurst(n) {
+        if (reduce) return;
+        const chars = ["♡", "❀", "✿", "♥"];
+        for (let i = 0; i < n; i++) {
+          const s = document.createElement("span");
+          s.className = "burst";
+          s.textContent = chars[Math.floor(Math.random() * chars.length)];
+          s.style.left = Math.random() * 100 + "vw";
+          s.style.fontSize = 16 + Math.random() * 26 + "px";
+          s.style.setProperty("--bx", Math.random() * 160 - 80 + "px");
+          s.style.setProperty("--br", Math.random() * 80 - 40 + "deg");
+          s.style.animationDelay = Math.random() * 0.9 + "s";
+          s.style.animationDuration = 3 + Math.random() * 2 + "s";
+          document.body.appendChild(s);
+          setTimeout(() => s.remove(), 6500);
+        }
+      }
+
+      // هدیه آخر
+      const fm = document.getElementById("finalMsg");
+      document.getElementById("finalBtn").addEventListener("click", () => {
+        fm.innerHTML = FINAL;
+        fm.classList.add("show");
+        heartBurst(46);
+        fm.scrollIntoView({
+          behavior: reduce ? "auto" : "smooth",
+          block: "center",
+        });
+      });
+
+      // پتال‌ها
+      if (!reduce) {
         const box = document.getElementById("petals");
         const n = innerWidth < 600 ? 14 : 24;
         for (let i = 0; i < n; i++) {
